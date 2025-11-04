@@ -1,0 +1,507 @@
+/* === 1. VARIABLES & GLOBAL STYLES === */
+:root {
+  --bg: #0a0f1a;
+  --card: #0f172a;
+  --muted: #9aa6b2;
+  --text: #e6ecf7;
+  --accent: #60a5fa;
+  --accent-2: #22d3ee;
+  --ok: #80ed99;
+  --danger: #ff6b6b;
+  --radius: 18px;
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --maxw: 980px;
+}
+
+* { 
+  box-sizing: border-box; 
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  color: var(--text);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+  background:
+    radial-gradient(1200px 600px at 20% -10%, #1a2440 0%, #0a0f1a 60%),
+    linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+  overflow-x: hidden; /* Ngăn chặn cuộn ngang, sửa lỗi "mất 1 nửa" */
+}
+
+a { 
+  color: inherit; 
+  text-decoration: none; 
+}
+
+/* === 2. LAYOUT === */
+.wrap { 
+  max-width: var(--maxw); 
+  margin: 0 auto; 
+  padding: 24px 16px 96px; 
+}
+
+/* === 3. COMPONENTS === */
+
+/* Header & Brand */
+header.card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  display: grid; grid-template-columns: 160px 1fr; gap: 16px; align-items: center;
+  overflow: hidden;
+}
+header.card::after {
+  content:"";
+  position: absolute; inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(90deg, rgba(96,165,250,.65), rgba(34,211,238,.55), rgba(139,92,246,.6));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  pointer-events: none;
+  opacity:.28;
+}
+
+/* KHỐI LOGO ĐÃ SỬA (CHO <img>) */
+.logo {
+  width: 100%; 
+  height: auto; 
+  border-radius: 20px; 
+}
+
+.brand h1 { 
+  margin: 0 0 8px; 
+  font: 700 28px/1.2 'Space Grotesk', Inter, sans-serif; 
+  letter-spacing:.2px; 
+}
+
+/* Slogan (Marquee) */
+.slogan {
+  position: relative;
+  overflow: hidden;
+  height: 34px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+}
+.slogan .track {
+  position: absolute; left: 0; top: 50%;
+  transform: translate(100%,-50%);
+  white-space: nowrap;
+  font-weight: 800; letter-spacing: .6px; text-transform: uppercase;
+  padding: 0 16px;
+  background: linear-gradient(90deg, #60a5fa, #22d3ee, #8b5cf6, #60a5fa);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  background-size: 200% 100%;
+  animation: shimmer 7s linear infinite, slide 16s linear infinite;
+  will-change: transform;
+}
+
+/* CTA Buttons */
+.cta { 
+  margin-top: 14px; 
+  display: grid; 
+  grid-template-columns: 1fr; 
+  gap: 10px; 
+}
+.btn {
+  width: 100%;
+  text-align: center;
+  background: var(--card); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px; padding: 14px 16px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  box-shadow: var(--shadow);
+  transition: transform .12s ease, border-color .25s ease, filter .25s ease, box-shadow .25s ease;
+}
+.btn:hover { 
+  transform: translateY(-1.5px); 
+  border-color: rgba(255,255,255,.25); 
+  filter: brightness(1.06); 
+  box-shadow: 0 14px 30px rgba(0,0,0,.45); 
+}
+.btn:active { 
+  transform: translateY(0); 
+  filter: brightness(1.02); 
+}
+
+/* === CSS CŨ CỦA NÚT FB ĐÃ BỊ XÓA === */
+
+/* Các màu nút cũ */
+.btn.primary { background: linear-gradient(90deg, var(--accent), var(--accent-2)); color:#041421; }
+.btn.call { background: linear-gradient(90deg, #80ed99, #57cc99); color: #022314; }
+.btn.sheet { background: linear-gradient(90deg, #ffdd57, #ffbe0b); color: #2b1f00; }
+.btn.file { background: linear-gradient(90deg, #ff8fab, #ff6b6b); }
+
+
+/* Grid & General Card */
+.grid { 
+  margin-top: 22px; 
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 12px; 
+}
+.card { 
+  background: var(--card); 
+  border: 1px solid rgba(255,255,255,.10); 
+  border-radius: var(--radius); 
+  padding: 16px; 
+  box-shadow: var(--shadow); 
+}
+.card h3 { 
+  margin: 0 0 6px; 
+  font-size: 16px; 
+}
+.muted { 
+  color: var(--muted); 
+  font-size: 13.5px; 
+  line-height: 1.5; 
+}
+
+/* Animated Text */
+.animated-text {
+  background: linear-gradient(90deg, #e2e8f0, #60a5fa, #22d3ee, #e2e8f0);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  background-size: 300% 100%;
+  animation: titleflow 10s linear infinite;
+}
+
+/* Product Card */
+.product-card { 
+  cursor: pointer; 
+  position: relative; 
+  transition: border-color .25s ease, transform .15s ease; 
+  display: flex;
+  align-items: flex-start;
+  gap: 14px; 
+  opacity: 0; /* Ẩn đi lúc đầu */
+  animation: fadeInUp 0.5s ease-out forwards; /* Tên animation */
+  animation-delay: calc(var(--delay-index, 0) * 60ms); 
+}
+.product-card:hover { 
+  border-color: rgba(96,165,250,.55); 
+  transform: translateY(-1px); 
+}
+.product-card::after { 
+  content: 'Xem ảnh'; 
+  position: absolute; 
+  right: 12px; 
+  bottom: 10px; 
+  font-size: 12px; 
+  color: var(--muted); 
+  opacity:.9; 
+}
+
+.product-icon {
+  width: 32px;
+  height: 32px;
+  color: var(--accent); /* Dùng màu xanh chủ đạo của bạn */
+  stroke-width: 2; /* Độ dày của nét vẽ icon */
+  flex-shrink: 0; /* Ngăn icon bị co lại */
+  margin-top: 2px; /* Căn chỉnh cho đẹp hơn */
+}
+
+/* Policy & Badges */
+.policy {
+  margin-top: 18px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+}
+.badges { 
+  display: grid; 
+  grid-template-columns: repeat(4, 1fr); 
+  gap: 10px; 
+}
+.badge {
+  display: grid; place-items: center; text-align: center; padding: 12px 8px;
+  border-radius: 14px; border: 1px solid rgba(255,255,255,.14);
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  font-weight: 700;
+}
+.badge small { 
+  color: var(--muted); 
+  font-weight: 600; 
+  display:block; 
+  margin-top: 4px; 
+}
+.policy-note { 
+  margin-top: 10px; 
+  color: var(--muted); 
+  font-size: 13.5px; 
+  text-align: center; 
+}
+
+/* Footer */
+footer { 
+  margin-top: 24px; 
+  text-align: center; 
+  color: var(--muted); 
+  font-size: 12px; 
+}
+
+/* === 4. MODAL GALLERY === */
+#galleryModal { 
+  position: fixed; 
+  inset: 0; 
+  background: rgba(2,6,23,.6); 
+  backdrop-filter: blur(4px); 
+  display: none; 
+  place-items: center; 
+  z-index: 60; 
+}
+#galleryModal.open { 
+  display: grid; 
+  animation: fadeIn .15s ease; 
+}
+.modal-card { 
+  width: min(980px, 92vw); 
+  max-height: 88vh; 
+  overflow: auto; 
+  background: var(--card); 
+  border: 1px solid rgba(255,255,255,.15); 
+  border-radius: 16px; 
+  box-shadow: var(--shadow); 
+  padding: 16px; 
+}
+.modal-top { 
+  display:flex; 
+  align-items:center; 
+  justify-content:space-between; 
+  gap:10px; 
+  margin-bottom: 10px; 
+}
+.modal-top h2 { 
+  font-size: 18px; 
+  margin: 0; 
+}
+.modal-close { 
+  appearance:none; 
+  border:1px solid rgba(255,255,255,.2); 
+  background:rgba(255,255,255,.05); 
+  color:var(--text); 
+  border-radius:10px; 
+  padding:8px 10px; 
+  cursor:pointer; 
+  font-weight:700; 
+}
+.gallery-grid { 
+  display: grid; 
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); 
+  gap: 10px; 
+}
+.gallery-grid img { 
+  width: 100%; 
+  aspect-ratio: 4/3; 
+  height: auto; 
+  object-fit: cover; 
+  border-radius: 12px; 
+  border: 1px solid rgba(255,255,255,.12); 
+  cursor: pointer; /* Thêm con trỏ để báo hiệu có thể bấm */
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+.gallery-grid img:hover {
+  opacity: 0.85;
+  transform: scale(1.03);
+}
+.desc { 
+  color: var(--muted); 
+  font-size: 14px; 
+  margin: 0 0 12px; 
+  line-height: 1.55; 
+}
+
+/* CSS CHO LIGHTBOX (XEM ẢNH TO) */
+.lightbox-back {
+  appearance: none;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.2);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+#lightboxImage {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,.12);
+}
+
+/* Logic ẩn/hiện bằng CSS */
+/* 1. Ẩn Cấp 2 (Lightbox) đi theo mặc định */
+.modal-card:not(.lightbox-active) #lightboxView {
+  display: none;
+}
+/* 2. Khi Cấp 2 hiện (có class .lightbox-active), ẩn Cấp 1 đi */
+.modal-card.lightbox-active .modal-top h2,
+.modal-card.lightbox-active .desc,
+.modal-card.lightbox-active #galGrid {
+  display: none;
+}
+
+
+/* === 5. TOAST (COPY NOTIFICATION) === */
+#toast {
+  visibility: hidden; /* Ẩn theo mặc định */
+  opacity: 0;
+  min-width: 250px;
+  background-color: #f0fdf4; /* Màu xanh lá nhạt */
+  color: #166534; /* Màu chữ xanh lá đậm */
+  border: 1px solid #bbf7d0; /* Viền xanh */
+  text-align: center;
+  border-radius: 12px;
+  padding: 14px 18px;
+  position: fixed;
+  z-index: 100;
+  left: 50%;
+  bottom: 40px;
+  transform: translate(-50%, 20px); /* Bắt đầu ở dưới */
+  transition: visibility 0.3s, opacity 0.3s, transform 0.3s ease-out;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 10px 20px rgba(0,0,0,.2);
+}
+#toast.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translate(-50%, 0); /* Di chuyển lên vị trí cuối */
+}
+
+/* === 9. FLOATING ACTION BUTTON (FAB) (KHỐI MỚI) === */
+.fab-facebook {
+  position: fixed; /* Ghim cố định */
+  bottom: 20px;
+  right: 20px;
+  z-index: 90; /* Nổi bên trên mọi thứ (trừ toast/modal) */
+  
+  width: 54px; /* Nút vuông bo tròn (hoặc tròn) */
+  height: 54px;
+  border-radius: 50%; /* Bo tròn thành hình tròn */
+  
+  background: #1877F2; /* Màu xanh Facebook */
+  color: #FFFFFF;
+  
+  display: grid; /* Căn icon vào giữa */
+  place-items: center;
+  
+  box-shadow: 0 8px 20px rgba(0,0,0,.3);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.fab-facebook:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(0,0,0,.4);
+}
+.fab-facebook svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2.5;
+}
+
+
+/* === 6. KEYFRAMES (ANIMATIONS) === */
+@keyframes shimmer { 
+  to { background-position: 200% 0; } 
+}
+@keyframes slide { 
+  to { transform: translate(-120%,-50%); } 
+}
+@keyframes titleflow { 
+  to { background-position: 300% 0; } 
+}
+@keyframes fadeIn { 
+  from { opacity:0; transform: scale(.99);} 
+  to { opacity:1; transform: scale(1);} 
+}
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === 6.5 ACCESSIBILITY === */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; 
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap; /* không xuống dòng */
+}
+
+
+/* === 7. RESPONSIVE DESIGN === */
+@media (max-width: 680px) {
+  .grid { grid-template-columns: 1fr; }
+  
+  .brand h1 { 
+    font-size: 24px; 
+    text-align: center; /* Căn giữa tiêu đề */
+  }
+  
+  header.card { 
+    grid-template-columns: 1fr; /* Chuyển thành 1 cột */
+    gap: 12px; 
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  /* KHỐI LOGO MOBILE ĐÃ SỬA (CHO <img>) */
+  .logo { 
+    width: 120px; 
+    height: auto; 
+    border-radius: 16px; 
+    justify-self: center; /* Căn giữa logo */
+    margin: 0 auto;
+    margin-bottom: 12px; /* Thêm khoảng cách dưới logo */
+  }
+  
+  .badges { grid-template-columns: repeat(2, 1fr); }
+  
+  .slogan { 
+    height: 28px; 
+    margin: 0 auto 4px; 
+    background: none;
+    border: none;
+    margin-bottom: 16px; /* Thêm khoảng cách dưới slogan */
+  }
+
+  .muted,
+  .policy-note {
+    font-size: 14px; /* Tăng từ 13.5px lên 14px cho dễ đọc */
+  }
+  
+  .slogan .track {
+    animation-name: shimmer, slide;
+    animation-duration: 7s, 25s;
+    animation-timing-function: linear, linear;
+    animation-iteration-count: infinite, infinite;
+    animation-delay: 0s, -8s;
+  }
+}
+
+/* === 8. MOBILE OPTIMIZATIONS === */
+/* Tắt hiệu ứng hover "nhấc lên" trên thiết bị cảm ứng (tránh sticky hover) */
+@media (hover: none) {
+  .btn:hover {
+    transform: none; /* Bỏ transform */
+    box-shadow: var(--shadow); /* Dùng lại shadow gốc */
+  }
+  .product-card:hover {
+    transform: none; /* Bỏ transform */
+  }
+}
